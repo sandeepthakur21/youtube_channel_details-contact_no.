@@ -11,14 +11,10 @@ import json
 
 chrome_options=Options()
 driver = webdriver.Chrome(options=chrome_options)#, executable_path ="C:\\Users\\shash\\Downloads\\chromedriver\\chromedriver.exe")
-# wait = WebDriverWait(driver,6)
-# print("Chrome opened successfully!!")
 
 baseUrl = "https://youtube.com/"
 keyword = input("catagory of search : ")
 scroll_count = int(input("enter total no. of search : "))
-# print("youtube opens!")
-
 
 def getChannelUrl(): #get page url
     # driver.get(f"{baseUrl}/search?q={keyword}&sp=EgQIBBAB") #filter- within month
@@ -30,7 +26,6 @@ def getChannelUrl(): #get page url
         driver.execute_script('window.scrollTo(0,(window.pageYOffset+300))')
         time.sleep(5)
         url_list= driver.find_elements_by_css_selector("#text.style-scope.ytd-channel-name a.yt-simple-endpoint.style-scope.yt-formatted-string")
-        # url_list = url_list.get_attribute("href")
         print(url_list)
         for links in url_list:
             print(links)
@@ -47,7 +42,7 @@ def getChannelUrl(): #get page url
     pd.DataFrame(url_link).to_excel(f'{keyword}_.xlsx', header=False, index=False)
     return url_link
 
-def getChannelDetails(urls): # get name, about, no. from about
+def getChannelDetails(urls): # get name, about, no.-from about
     details = []
     for url in urls:
         driver.get(f"{url}/about")
