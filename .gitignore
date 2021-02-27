@@ -1,0 +1,5 @@
+/mylogs.log
+*.log
+geckodriver
+*.odf
+*.xlsx
