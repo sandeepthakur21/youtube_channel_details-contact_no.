@@ -39,8 +39,8 @@ def getChannelUrl(): #get page url
     
     ctime = driver.find_element_by_css_selector("#metadata-line > span:nth-child(2)").text
     print(ctime)
-    links = list(dict.fromkeys(map(lambda a: a.get_attribute("href"),url_list)))
-    pd.DataFrame(url_link).to_excel(f'{keyword}_.xlsx', header=False, index=False)
+#     links = list(dict.fromkeys(map(lambda a: a.get_attribute("href"),url_list)))
+#     pd.DataFrame(url_link).to_excel(f'{keyword}_.xlsx', header=False, index=False)
     return url_link
 
 def getChannelDetails(urls): # get name, about, no. from about
