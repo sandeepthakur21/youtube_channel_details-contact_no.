@@ -25,25 +25,21 @@ def getChannelUrl(): #get page url
     driver.get(f"{baseUrl}/search?q={keyword}&sp=EgIIBQ%253D%253D") #filter-within year
     time.sleep(5)
     url_list = []
-    url_link = []
+    url_link = set()
     for i in range(scroll_count): #loop to scroll page
         driver.execute_script('window.scrollTo(0,(window.pageYOffset+300))')
         time.sleep(5)
         url_list= driver.find_elements_by_css_selector("#text.style-scope.ytd-channel-name a.yt-simple-endpoint.style-scope.yt-formatted-string")
         # url_list = url_list.get_attribute("href")
-        print(url_list)
         for links in url_list:
-            print(links)
-            if links not in url_link:
-                print(links)
-                url_link.append(links.get_attribute("href"))
-            # url_list.clear()
+            if (links != '#'):
+                url_link.add(links.get_attribute("href"))
     
     # allChannelList= driver.find_elements_by_css_selector("#text.style-scope.ytd-channel-name a.yt-simple-endpoint.style-scope.yt-formatted-string")
     
     ctime = driver.find_element_by_css_selector("#metadata-line > span:nth-child(2)").text
     print(ctime)
-    # links = list(dict.fromkeys(map(lambda a: a.get_attribute("href"),url_list)))
+    links = list(dict.fromkeys(map(lambda a: a.get_attribute("href"),url_list)))
     pd.DataFrame(url_link).to_excel(f'{keyword}_.xlsx', header=False, index=False)
     return url_link
 
@@ -51,6 +47,7 @@ def getChannelDetails(urls): # get name, about, no. from about
     details = []
     for url in urls:
         driver.get(f"{url}/about")
+        time.sleep(5)
         cname = driver.find_element_by_css_selector("#text.style-scope.ytd-channel-name").text #get channel name
         cdesc = driver.find_element_by_css_selector("#description-container > yt-formatted-string:nth-child(2)").text.rstrip() #get channel description
         i = "not given" #default value for contact no
